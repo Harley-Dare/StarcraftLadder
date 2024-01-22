@@ -20,9 +20,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class DataFetcher {
     private Properties prop = new Properties();
     private String oAuthToken;
+    private String region;
+    private int regionID;
     DataFetcher(String cfgPath, String region, int regionID) throws Exception{
         prop = fetchConfig(cfgPath);
         oAuthToken =  fetchOAuthToken(prop);
+        this.region = region;
+        this.regionID = regionID;
         fetchLadderData(region, regionID);
     }
 
@@ -35,7 +39,7 @@ public class DataFetcher {
     }
 
 
-    public static String fetchOAuthToken(Properties config) throws Exception {
+    public String fetchOAuthToken(Properties config) throws Exception {
         String tokenUrl = "https://oauth.battle.net/token";
         HttpClient client = HttpClient.newHttpClient();
 
@@ -110,5 +114,23 @@ public class DataFetcher {
 
     public Properties getConfig(){
         return prop;
+    }
+
+    public String getRegion(){
+        return region;
+    }
+
+
+    public int getRegionID(){
+        return regionID;
+    }
+
+    public void setRegion(String region){
+        this.region = region;
+    }
+
+
+    public void setRegionID(int regionID){
+        this.regionID = regionID;
     }
 }
